@@ -1,11 +1,12 @@
 import sys
+import io
 from PyPDF2 import PdfReader
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from transformers import pipeline
 
-def extract_text_from_pdf(file_path):
-    reader = PdfReader(file_path)
+def extract_text_from_pdf(pdf_content):
+    reader = PdfReader(pdf_content)
     slide_texts = []
 
     for page_number in range(len(reader.pages)):
@@ -23,7 +24,7 @@ def group_slides_by_similarity(slide_texts, threshold=0.5):
     current_group = [0]
 
     for i in range(1, len(similarities)):
-        if similarities[i-1, i] > threshold:
+        if similarities[i - 1, i] > threshold:
             current_group.append(i)
         else:
             groups.append(current_group)
@@ -43,8 +44,9 @@ def generate_summaries(slide_texts, groups, summarizer):
             notes.append(f"Group {groups.index(group) + 1} Notes: {summary}")
     return notes
 
-def main(pdf_file):
-    slide_texts = extract_text_from_pdf(pdf_file)
+def main():
+    pdf_content = sys.stdin.buffer.read()
+    slide_texts = extract_text_from_pdf(io.BytesIO(pdf_content))
     slide_groups = group_slides_by_similarity(slide_texts, threshold=0.5)
     summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
     slide_notes = generate_summaries(slide_texts, slide_groups, summarizer)
@@ -52,4 +54,4 @@ def main(pdf_file):
         print(note)
 
 if __name__ == "__main__":
-    main(sys.argv[1])
+    main()

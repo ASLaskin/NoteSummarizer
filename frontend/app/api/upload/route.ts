@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { exec } from 'child_process';
-import fs from 'fs';
-import path from 'path';
 
 async function streamToBuffer(stream: ReadableStream<Uint8Array>) {
   const reader = stream.getReader();
@@ -31,11 +29,10 @@ export async function POST(req: NextRequest) {
       return new NextResponse('No file uploaded', { status: 400 });
     }
 
-    const tempPath = path.join(process.cwd(), 'public', 'uploads', 'uploaded.pdf');
     const fileBuffer = await streamToBuffer(req.body);
-    fs.writeFileSync(tempPath, fileBuffer);
+
     return new Promise((resolve) => {
-      exec(`python scripts/summarize_pdf.py ${tempPath}`, (error, stdout, stderr) => {
+      const pythonProcess = exec('python scripts/summarize_pdf.py', (error, stdout, stderr) => {
         if (error) {
           console.error(`Error: ${stderr}`);
           resolve(new NextResponse('Error processing PDF', { status: 500 }));
@@ -44,6 +41,15 @@ export async function POST(req: NextRequest) {
           resolve(new NextResponse(JSON.stringify({ notes: stdout }), { status: 200 }));
         }
       });
+
+      if (pythonProcess.stdin) {
+        pythonProcess.stdin.write(fileBuffer);
+        pythonProcess.stdin.end();
+      } else {
+        console.error('stdin is null');
+        resolve(new NextResponse('Error processing PDF', { status: 500 }));
+      }
+
     });
   } catch (error) {
     console.error('Error handling file upload:', error);

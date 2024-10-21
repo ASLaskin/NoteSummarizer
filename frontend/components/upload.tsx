@@ -4,6 +4,7 @@ import { useState, ChangeEvent, FormEvent } from 'react';
 
 const UploadForm: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
+  const [result, setResult] = useState<string | null>(null);
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -23,7 +24,6 @@ const UploadForm: React.FC = () => {
     formData.append('pdf', file);
 
     try {
-      console.log("Fetching AI response")
       const response = await fetch('/api/upload', {
         method: 'POST',
         body: formData,
@@ -34,8 +34,9 @@ const UploadForm: React.FC = () => {
       }
 
       const result = await response.json();
+      setResult(result.notes);
       
-      console.log(result);
+      console.log(result.notes);
     } catch (error) {
       console.error('Error uploading file:', error);
     }
@@ -45,6 +46,7 @@ const UploadForm: React.FC = () => {
     <form onSubmit={handleSubmit}>
       <input type="file" accept="application/pdf" onChange={handleFileChange} />
       <button type="submit">Upload and Summarize</button>
+      {result && <div>Summary: {result}</div>}
     </form>
   );
 };
