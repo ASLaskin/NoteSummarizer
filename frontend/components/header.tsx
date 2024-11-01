@@ -2,24 +2,13 @@
 
 import { Button } from "@/components/ui/button"
 
+
 export function HeaderComponent() {
   return (
     <header className="bg-background border-b">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         <div className="flex items-center space-x-2">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="w-6 h-6 text-primary"
-          >
-            <path d="M6 3v18" />
-            <path d="M6 7h10a4 4 0 0 1 0 8H6" />
-          </svg>
+        <img src="/icon.svg" alt="Icon" className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10" />
           <span className="text-xl font-bold text-primary">NoteNectar</span>
           {/* <nav className="hidden md:flex space-x-4">
             <a href="#features" className="text-primary hover:underline">Features</a>
