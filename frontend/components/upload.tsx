@@ -4,11 +4,15 @@ import { useState, ChangeEvent, FormEvent } from "react";
 
 const UploadForm: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
+  const [fileName, setFileName] = useState<string | null>(null);
   const [result, setResult] = useState<string | null>(null);
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      setFile(e.target.files[0]);
+      const uploadedFile = e.target.files[0];
+      setFile(uploadedFile);
+      setFileName(uploadedFile.name); 
+      setResult(URL.createObjectURL(uploadedFile));
     }
   };
 
@@ -83,6 +87,11 @@ const UploadForm: React.FC = () => {
           />
         </label>
       </div>
+      {fileName && (
+        <p className="mt-2 text-sm text-gray-700 dark:text-gray-300">
+          Uploaded file: <span className="font-medium">{fileName}</span>
+        </p>
+      )}
       <button
         type="submit"
         className="mt-4 bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 dark:bg-blue-700 dark:hover:bg-blue-800 dark:focus:ring-blue-900"
@@ -90,8 +99,14 @@ const UploadForm: React.FC = () => {
         Upload and Summarize
       </button>
       {result && (
-        <div className="mt-4 bg-gray-100 dark:bg-gray-700 p-4 rounded-lg">
-          Summary: {result}
+        <div className="mt-4 w-full h-64 bg-gray-100 dark:bg-gray-700 p-4 rounded-lg">
+          <iframe
+            src={result}
+            width="100%"
+            height="100%"
+            className="rounded-lg"
+            title="PDF Preview"
+          ></iframe>
         </div>
       )}
     </form>
