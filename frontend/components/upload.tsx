@@ -1,12 +1,14 @@
 "use client";
 
 import { useState, ChangeEvent, FormEvent } from "react";
+import { ModalWithLoading } from "@/components/modal-with-loading"; 
 
 const UploadForm: React.FC = () => {
   const [uploaded, setUploaded] = useState<boolean | null>(true);
   const [file, setFile] = useState<File | null>(null);
   const [fileName, setFileName] = useState<string | null>(null);
   const [result, setResult] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false); 
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -25,7 +27,9 @@ const UploadForm: React.FC = () => {
       console.error("No file selected");
       setUploaded(false);
       return;
-    } 
+    }
+
+    setIsModalOpen(true);
 
     const formData = new FormData();
     formData.append("pdf", file);
@@ -46,6 +50,8 @@ const UploadForm: React.FC = () => {
       console.log(result.notes);
     } catch (error) {
       console.error("Error uploading file:", error);
+    } finally {
+      setIsModalOpen(false); // Close modal once upload completes
     }
   };
 
@@ -117,6 +123,9 @@ const UploadForm: React.FC = () => {
           ></iframe>
         </div>
       )}
+
+      {/* Render modal */}
+      <ModalWithLoading isOpen={isModalOpen} />
     </form>
   );
 };
