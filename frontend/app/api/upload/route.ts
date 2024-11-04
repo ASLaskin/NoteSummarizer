@@ -19,7 +19,7 @@ async function streamToBuffer(stream: ReadableStream<Uint8Array>) {
 
 export const config = {
   api: {
-    bodyParser: false, 
+    bodyParser: false,
   },
 };
 
@@ -34,11 +34,11 @@ export async function POST(req: NextRequest) {
     return new Promise((resolve) => {
       const pythonProcess = exec('python scripts/summarize_pdf.py', (error, stdout, stderr) => {
         if (error) {
-          console.error(`Error: ${stderr}`);
-          resolve(new NextResponse('Error processing PDF', { status: 500 }));
+          console.error(`Python Script Error: ${stderr}`);
+          return resolve(new NextResponse('Error processing PDF', { status: 500 }));
         } else {
-          console.log(`Output: ${stdout}`);
-          resolve(new NextResponse(JSON.stringify({ notes: stdout }), { status: 200 }));
+          console.log(`Python Script Output: ${stdout}`);
+          return resolve(new NextResponse(JSON.stringify({ notes: stdout.trim() }), { status: 200 }));
         }
       });
 
@@ -47,9 +47,8 @@ export async function POST(req: NextRequest) {
         pythonProcess.stdin.end();
       } else {
         console.error('stdin is null');
-        resolve(new NextResponse('Error processing PDF', { status: 500 }));
+        return resolve(new NextResponse('Error processing PDF', { status: 500 }));
       }
-
     });
   } catch (error) {
     console.error('Error handling file upload:', error);
