@@ -3,6 +3,7 @@
 import { useState, ChangeEvent, FormEvent } from "react";
 
 const UploadForm: React.FC = () => {
+  const [uploaded, setUploaded] = useState<boolean | null>(true);
   const [file, setFile] = useState<File | null>(null);
   const [fileName, setFileName] = useState<string | null>(null);
   const [result, setResult] = useState<string | null>(null);
@@ -13,6 +14,7 @@ const UploadForm: React.FC = () => {
       setFile(uploadedFile);
       setFileName(uploadedFile.name); 
       setResult(URL.createObjectURL(uploadedFile));
+      setUploaded(true);
     }
   };
 
@@ -21,8 +23,9 @@ const UploadForm: React.FC = () => {
 
     if (!file) {
       console.error("No file selected");
+      setUploaded(false);
       return;
-    }
+    } 
 
     const formData = new FormData();
     formData.append("pdf", file);
@@ -87,6 +90,11 @@ const UploadForm: React.FC = () => {
           />
         </label>
       </div>
+      {uploaded ? (
+        <h1></h1>
+      ) : (
+        <h1 className="text-red-500">File was not uploaded</h1>
+      )}
       {fileName && (
         <p className="mt-2 text-sm text-gray-700 dark:text-gray-300">
           Uploaded file: <span className="font-medium">{fileName}</span>
