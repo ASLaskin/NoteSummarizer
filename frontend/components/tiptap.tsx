@@ -1,13 +1,13 @@
-'use client'
+"use client";
 
-import { useEditor, EditorContent } from '@tiptap/react'
-import StarterKit from '@tiptap/starter-kit'
+import { useEditor, EditorContent } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
 
-const Tiptap = () => {
+const Tiptap = ({ initialContent }: { initialContent: string }) => {
   const editor = useEditor({
     extensions: [StarterKit],
-    content: 'Hello world',
-  })
+    content: initialContent,
+  });
 
   return (
     <div className="p-4 border border-gray-300 rounded-md shadow-lg bg-white">
@@ -16,7 +16,7 @@ const Tiptap = () => {
         className="prose prose-lg focus:outline-none text-black focus:ring-2 focus:ring-blue-500 rounded-md min-h-[200px]"
       />
     </div>
-  )
-}
+  );
+};
 
-export default Tiptap
+export default Tiptap;

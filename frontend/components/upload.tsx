@@ -3,7 +3,11 @@
 import { useState, ChangeEvent, FormEvent } from "react";
 import { ModalWithLoading } from "@/components/modal-with-loading"; 
 
-const UploadForm: React.FC = () => {
+interface UploadFormProps {
+  onUploadSuccess: (content: string) => void;
+}
+
+const UploadForm: React.FC<UploadFormProps> = ({ onUploadSuccess }) => {
   const [uploaded, setUploaded] = useState<boolean | null>(true);
   const [file, setFile] = useState<File | null>(null);
   const [fileName, setFileName] = useState<string | null>(null);
@@ -47,11 +51,11 @@ const UploadForm: React.FC = () => {
       const result = await response.json();
       setResult(result.notes);
 
-      console.log(result.notes);
+      onUploadSuccess(result.notes);
     } catch (error) {
       console.error("Error uploading file:", error);
     } finally {
-      setIsModalOpen(false); // Close modal once upload completes
+      setIsModalOpen(false);
     }
   };
 
@@ -108,7 +112,7 @@ const UploadForm: React.FC = () => {
       )}
       <button
         type="submit"
-        className="mt-4 bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 dark:bg-blue-700 dark:hover:bg-blue-800 dark:focus:ring-blue-900"
+        className="mt-4 bg-green-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300 dark:bg-green-700 dark:hover:bg-blue-800 dark:focus:ring-blue-900"
       >
         Upload and Summarize
       </button>

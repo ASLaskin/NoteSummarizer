@@ -1,9 +1,13 @@
 import UploadForm from "./upload";
 
-export default function TitleSection() {
+interface TitleSectionProps {
+  navigateToEditor: (content: string) => void;
+}
+
+export default function TitleSection({ navigateToEditor }: TitleSectionProps) {
   return (
     <>
-      <section className="relative bg-blue-500 dark:bg-blue-700 text-white py-20">
+      <section className="relative bg-green-500 dark:bg-green-700 text-white py-20">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
             Welcome to NoteNectar
@@ -14,7 +18,7 @@ export default function TitleSection() {
             helping you save time and focus on what really matters.
           </p>
           <div className="mt-8 flex justify-center">
-            <UploadForm />
+            <UploadForm onUploadSuccess={navigateToEditor} />
           </div>
         </div>
       </section>
