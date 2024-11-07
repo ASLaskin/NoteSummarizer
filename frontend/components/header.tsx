@@ -1,6 +1,7 @@
 'use client'
 
 import { Button } from "@/components/ui/button"
+import LightDarkToggle from "./toggle/LightDarkToggle";
 
 
 export function HeaderComponent() {
@@ -18,6 +19,7 @@ export function HeaderComponent() {
         </div>
         <div className="hidden md:block">
           <Button variant="ghost">placeholder</Button>
+          <LightDarkToggle />
         </div>
         <div className="md:hidden">
           <Button variant="ghost" size="icon">

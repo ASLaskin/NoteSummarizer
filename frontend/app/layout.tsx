@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { HeaderComponent } from "@/components/header";
+import { LightDarkProvider } from "./theme/LightDarkProvider";
 import "./globals.css";
 
 const geistSans = localFont({
@@ -33,8 +34,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <HeaderComponent/>
-        {children}
+        <LightDarkProvider>
+          <HeaderComponent />
+          {children}
+        </LightDarkProvider>
       </body>
     </html>
   );
