@@ -15,8 +15,20 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-const Tiptap = ({ initialContent = "<p>Start typing here...</p>" }: { initialContent?: string }) => {
-  const [editorContent, setEditorContent] = useState(initialContent);
+
+const preprocessContent = (content: string) => {
+  return content.replace(
+    /(Group \d+ Notes:)/g,
+    '<br/><strong>$1</strong><br/>'
+  );
+};
+
+const Tiptap = ({
+  initialContent = "<p>Start typing here...</p>",
+}: {
+  initialContent?: string;
+}) => {
+  const [editorContent, setEditorContent] = useState(preprocessContent(initialContent));
   const { theme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
