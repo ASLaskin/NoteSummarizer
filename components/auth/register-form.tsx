@@ -14,6 +14,7 @@ export function RegisterForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
@@ -24,6 +25,7 @@ export function RegisterForm() {
     e.preventDefault();
     setIsLoading(true);
     setError('');
+    setSuccessMessage('');
 
     if (password !== confirmPassword) {
       setError('Passwords do not match');
@@ -38,13 +40,30 @@ export function RegisterForm() {
     }
 
     try {
-      //make an API call to register the user
-      setError('Registration successful! Please sign in with your credentials.');
+      const response = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: name.trim(),
+          email: email.trim(),
+          password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Registration failed');
+      }
+
+      setSuccessMessage('Registration successful! Redirecting to sign in...');
       setTimeout(() => {
         router.push('/auth/signin');
       }, 2000);
     } catch (error) {
-      setError('An error occurred during registration. Please try again.');
+      setError(error instanceof Error ? error.message : 'An error occurred during registration. Please try again.');
     } finally {
       setIsLoading(false);
     }
@@ -76,8 +95,14 @@ export function RegisterForm() {
       </CardHeader>
       <CardContent className="space-y-4">
         {error && (
-          <Alert className={`${error.includes('successful') ? 'border-green-200 bg-green-50 text-green-800' : 'border-red-200 bg-red-50 text-red-800'}`}>
+          <Alert className="border-red-200 bg-red-50 text-red-800">
             <AlertDescription>{error}</AlertDescription>
+          </Alert>
+        )}
+
+        {successMessage && (
+          <Alert className="border-green-200 bg-green-50 text-green-800">
+            <AlertDescription>{successMessage}</AlertDescription>
           </Alert>
         )}
 
