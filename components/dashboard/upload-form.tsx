@@ -2,9 +2,10 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Toggle } from '@/components/ui/toggle';
-import { Input } from '@/components/ui/input';
 import { useState } from 'react';
-import { StepForward, Upload, FileText, X, Download } from 'lucide-react';
+import { StepForward } from 'lucide-react';
+import FileUpload from './file-upload';
+import { set } from 'mongoose';
 
 export type uploadSettings = {
     file: File | null;
@@ -49,7 +50,12 @@ export default function UploadForm({ onSubmit }: Props) {
 
             <form>
                 <div className="space-y-6">
-                    {/* add a file upload  */}
+
+                    <FileUpload
+                        file={file}
+                        onFileChange={setFile}
+                    />
+
                     <div className="space-y-3">
                         <Label className="text-sm font-medium">Summary Style</Label>
                         <div className="flex gap-2">
@@ -107,7 +113,6 @@ export default function UploadForm({ onSubmit }: Props) {
                         Summarize
                     </Button>
                 </div>
-
             </form>
         </div>
     )
