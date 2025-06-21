@@ -1,18 +1,16 @@
 'use client';
 
 import { useSession } from 'next-auth/react';
+import UploadForm from './upload-form';
 
 export function DashboardContent() {
   const { data: session } = useSession();
 
-  // if (!session) {
-  //   return null;
-  // }
+
 
   return (
     <div>
-      Dashboard
-
+      <UploadForm onSubmit={(settings) => console.log(settings)} />
     </div>
   );
 }
