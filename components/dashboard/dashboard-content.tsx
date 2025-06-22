@@ -16,6 +16,10 @@ import { use, useState } from 'react';
 import { LoadingModal } from './loading-dialog';
 import { DemoModal } from './demo-modal';
 
+interface SummarizeResponse {
+  summary: string;
+}
+
 export function DashboardContent() {
   const { data: session } = useSession();
   const [isLoadingOpen, setIsLoadingOpen] = useState(false);
@@ -47,6 +51,18 @@ export function DashboardContent() {
 
           console.log('API Response:', result);
           console.log('Extracted text:', result.text);
+
+          const SummarizeResponse = await fetch('/api/summarize', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({text: result.text})
+          })
+
+          const summaryResult: SummarizeResponse = await SummarizeResponse.json();
+          console.log('Summary:', summaryResult.summary);
+
 
 
         } catch (error) {
