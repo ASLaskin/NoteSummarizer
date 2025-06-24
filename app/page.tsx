@@ -36,7 +36,7 @@ export default function Home() {
           <div className="text-center">
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
               Summarizing Notes
-              <span className="block bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              <span className="block bg-gradient-to-r from-green-500 to-blue-500 bg-clip-text text-transparent">
                 Made Simple
               </span>
             </h1>
@@ -47,7 +47,7 @@ export default function Home() {
               <Button 
                 size="lg" 
                 onClick={() => router.push('/auth/register')}
-                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-lg px-8 py-3 transform hover:scale-105 transition-all duration-200"
+                className="bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-lg px-8 py-3 transform hover:scale-105 transition-all duration-200"
               >
                 Get Started
                 <ArrowRight className="ml-2 h-5 w-5" />
