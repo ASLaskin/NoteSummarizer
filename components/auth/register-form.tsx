@@ -86,7 +86,7 @@ export function RegisterForm() {
   return (
     <Card className="w-full max-w-md mx-auto backdrop-blur-sm bg-white/95 shadow-2xl border-0">
       <CardHeader className="space-y-1 text-center">
-        <CardTitle className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+        <CardTitle className="text-2xl font-bold bg-gradient-to-r from-green-500 to-blue-500 bg-clip-text text-transparent">
           Create account
         </CardTitle>
         <CardDescription className="text-gray-600">
@@ -198,7 +198,7 @@ export function RegisterForm() {
           <Button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium transition-all duration-200 hover:shadow-lg transform hover:-translate-y-0.5"
+            className="w-full bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white font-medium transition-all duration-200 hover:shadow-lg transform hover:-translate-y-0.5"
           >
             {isLoading ? (
               <>

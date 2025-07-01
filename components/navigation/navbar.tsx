@@ -12,9 +12,11 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { LogOut, User, Settings } from 'lucide-react';
+import { useRouter } from 'next/navigation'
 
 export function Navbar() {
   const { data: session } = useSession();
+  const router = useRouter()
 
   return (
     <nav className="border-b bg-white/80 backdrop-blur-md sticky top-0 z-50">
@@ -22,9 +24,12 @@ export function Navbar() {
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
             <div className="flex-shrink-0">
-              <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              <button
+                onClick={() => router.push('/')}
+                className="text-xl font-bold bg-gradient-to-r from-green-500 to-blue-500 bg-clip-text text-transparent hover:opacity-80 transition-opacity"
+              >
                 Note Nectar
-              </h1>
+              </button>
             </div>
           </div>
 
@@ -35,7 +40,7 @@ export function Navbar() {
                   <Button variant="ghost" className="relative h-8 w-8 rounded-full">
                     <Avatar className="h-8 w-8">
                       <AvatarImage src={session.user?.image || ''} alt={session.user?.name || 'User'} />
-                      <AvatarFallback className="bg-gradient-to-r from-blue-500 to-purple-500 text-white">
+                      <AvatarFallback className="bg-gradient-to-r from-green-500 to-blue-500 text-white">
                         {session.user?.name?.charAt(0) || 'U'}
                       </AvatarFallback>
                     </Avatar>
@@ -53,11 +58,7 @@ export function Navbar() {
                   <DropdownMenuSeparator />
                   <DropdownMenuItem className="cursor-pointer">
                     <User className="mr-2 h-4 w-4" />
-                    <span>Profile</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem className="cursor-pointer">
-                    <Settings className="mr-2 h-4 w-4" />
-                    <span>Settings</span>
+                    <span>Dashboard</span>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
@@ -74,7 +75,7 @@ export function Navbar() {
                 <Button variant="ghost" asChild>
                   <a href="/auth/signin">Sign in</a>
                 </Button>
-                <Button asChild className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
+                <Button asChild className="bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 ">
                   <a href="/auth/register">Sign up</a>
                 </Button>
               </div>
