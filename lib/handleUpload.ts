@@ -2,6 +2,7 @@
 
 import { summaryToLexicalState } from "./editorHelper"
 import { SerializedEditorState } from "lexical"
+import { getSampleSummary } from "./sampleSummaries";
 
 export async function handleUpload(
     settings: any,
@@ -12,15 +13,19 @@ export async function handleUpload(
 ) {
     if (!allowApiCall) return;
 
-    if (allowApiCall === "false") {
-    if (settings.file.name === "sample.pptx") {
-        setLoading(true); 
-        setTimeout(() => {
-            setEditorState(summaryToLexicalState("This is where sample output will be going"))
-            setLoading(false); 
-        }, 2000);
-    } else {
-            setDemo(true)
+   if (allowApiCall === "false") {
+        if (settings.file.name === "sample.pptx") {
+            setLoading(true);
+            setTimeout(() => {
+                const sampleText = getSampleSummary(
+                    settings.includeBulletPoints,
+                    settings.includeSlideTitles
+                );
+                setEditorState(summaryToLexicalState(sampleText));
+                setLoading(false);
+            }, 2000);
+        } else {
+            setDemo(true);
         }
     }
 
