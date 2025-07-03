@@ -27,8 +27,13 @@ export default function FileUpload({ file, onFileChange }: Props) {
         onFileChange(null)
     }
 
-    function onSampleFile(){
-        //download sample file
+    function onSampleFile() {
+        const link = document.createElement('a');
+        link.href = '/sample.pptx';
+        link.download = 'sample.pptx';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     }
 
     return (
