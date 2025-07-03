@@ -11,7 +11,7 @@ interface LoadingModalProps {
     onClose: () => void;
 }
 
-export function LoadingModal({ isOpen, onClose }: LoadingModalProps) {
+export function LoadingModal({ isOpen }: LoadingModalProps) {
     //chatgpt to create arbitrary messages lol
     const messages = [
         "Waking up the hamsters...",

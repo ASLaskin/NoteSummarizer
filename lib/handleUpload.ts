@@ -13,9 +13,13 @@ export async function handleUpload(
     if (!allowApiCall) return;
 
     if (allowApiCall === "false") {
-        if (settings.file.name === "sample.pptx") {
+    if (settings.file.name === "sample.pptx") {
+        setLoading(true); 
+        setTimeout(() => {
             setEditorState(summaryToLexicalState("This is where sample output will be going"))
-        } else {
+            setLoading(false); 
+        }, 2000);
+    } else {
             setDemo(true)
         }
     }
@@ -37,7 +41,12 @@ export async function handleUpload(
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ text: result.text }),
+                body: JSON.stringify({
+                    text: result.text,
+                    style: settings.style,
+                    includeBulletPoints: settings.includeBulletPoints,
+                    includeSlideTitles: settings.includeSlideTitles
+                }),
             })
 
             const summary = await summarizeResponse.json()

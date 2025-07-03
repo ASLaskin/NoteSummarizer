@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 
 interface SummarizeRequestBody {
     text: string;
+    style: 'wordy' | 'minimal';
+    includeBulletPoints: boolean;
+    includeSlideTitles: boolean;
 }
 
 interface OpenAIMessage {
@@ -20,7 +23,7 @@ interface OpenAIResponse {
 export async function POST(request: NextRequest) {
     try {
         const body: SummarizeRequestBody = await request.json();
-        const text = body;
+        const { text, style, includeBulletPoints, includeSlideTitles } = body;
 
         if (!process.env.OPENAI_API_KEY) {
             return NextResponse.json(
@@ -30,11 +33,10 @@ export async function POST(request: NextRequest) {
         }
 
 
-        //change the prompt
         const messages: OpenAIMessage[] = [
             {
                 role: 'user',
-                content: `Please summarize the following text: ${text}`
+                content: `Please summarize the following text in ${style} format${includeBulletPoints ? ' with bullet points' : ' without bullet points'}${includeSlideTitles ? ' and include slide titles' : ' and exclude slide titles'}: ${text}`
             }
         ]
 
