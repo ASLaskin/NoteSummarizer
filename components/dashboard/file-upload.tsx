@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Upload, FileText, X, Download } from 'lucide-react';
+import { toast } from "sonner"
 
 type Props = {
     file: File | null;
@@ -16,7 +17,7 @@ export default function FileUpload({ file, onFileChange }: Props) {
 
         const maxSize = 10 * 1024 * 1024; //10MB
         if (selectedFile.size > maxSize) {
-            //add toast
+            toast.error("File Size exceeds 10MB limit")
             return;
         }
 

@@ -5,7 +5,7 @@ import { Toggle } from '@/components/ui/toggle';
 import { useState } from 'react';
 import { StepForward } from 'lucide-react';
 import FileUpload from './file-upload';
-import { set } from 'mongoose';
+import { toast } from 'sonner';
 
 export type uploadSettings = {
     file: File | null;
@@ -28,7 +28,7 @@ export default function UploadForm({ onSubmit }: Props) {
         e.preventDefault();
 
         if (!file) {
-            //add a toast notification here
+            toast.error("File upload is required")
             return;
         }
 
@@ -107,7 +107,6 @@ export default function UploadForm({ onSubmit }: Props) {
                     <Button
                         onClick={handleSubmit}
                         className="w-full"
-                        disabled={!file}
                     >
                         <StepForward className="mr-2 h-4 w-4" />
                         Summarize
