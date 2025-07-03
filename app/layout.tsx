@@ -5,8 +5,8 @@ import { Navbar } from '@/components/navigation/navbar';
 import { Toaster } from "@/components/ui/sonner"
 
 export const metadata: Metadata = {
-  title: 'AuthApp - Secure Authentication',
-  description: 'Modern authentication with Google OAuth integration',
+  title: 'Note Nectar',
+  description: 'Summarize your pptx into a text editor',
 };
 
 export default function RootLayout({
