@@ -38,7 +38,7 @@ export function DashboardContent() {
       {editorState && (
         <button
           onClick={handleReset}
-          className="absolute top-4 left-4 bg-gray-200 hover:bg-gray-300 text-sm px-3 py-1 rounded"
+          className="top-4 left-4 bg-gray-200 hover:bg-gray-300 text-sm px-3 py-1 rounded"
         >
           ← Back to Upload
         </button>

@@ -187,7 +187,7 @@ export default function UploadForm({ onSubmit }: Props) {
 
                                     <Button
                                         onClick={handleSubmit}
-                                        className="w-full bg-gradient-to-r from-green-500 to-blue-500 hover:from-blue-700 hover:to-purple-700 text-lg py-6 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-200"
+                                        className="w-full bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-700 hover:to-blue-700 text-lg py-6 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-200"
                                         size="lg"
                                     >
                                         <StepForward className="mr-2 h-5 w-5" />

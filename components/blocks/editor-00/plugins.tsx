@@ -37,7 +37,6 @@ import { ActionsPlugin } from "@/components/editor/plugins/actions/actions-plugi
 import { CounterCharacterPlugin } from "@/components/editor/plugins/actions/counter-character-plugin"
 import { ImportExportPlugin } from "@/components/editor/plugins/actions/import-export-plugin"
 import { SpeechToTextPlugin } from "@/components/editor/plugins/actions/speech-to-text-plugin"
-import { MarkdownTogglePlugin } from "@/components/editor/plugins/actions/markdown-toggle-plugin"
 import { ClearEditorActionPlugin } from "@/components/editor/plugins/actions/clear-editor-plugin"
 
 
@@ -117,11 +116,6 @@ export function Plugins() {
           <div className="flex flex-1 justify-end">
             <SpeechToTextPlugin />
             <ImportExportPlugin />
-            <MarkdownTogglePlugin
-              shouldPreserveNewLinesInMarkdown={true}
-              transformers={[
-              ]}
-            />
             <>
               <ClearEditorActionPlugin />
               <ClearEditorPlugin />
