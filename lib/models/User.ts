@@ -6,6 +6,7 @@ export interface IUser extends mongoose.Document {
     email: string;
     password?: string;
     googleId?: string;
+    emailVerified?: Date;  
     createdAt: Date;
     comparePassword(candidatePassword: string): Promise<boolean>;
 }
@@ -30,8 +31,14 @@ const userSchema = new mongoose.Schema<IUser>({
     googleId: {
         type: String,
         sparse: true,
+    },
+    emailVerified: { 
+        type: Date,
+        default: null,
     }
-})
+}, {
+    timestamps: true,  
+});
 
 userSchema.pre('save', async function (next) {
     if (!this.isModified('password') || !this.password) {

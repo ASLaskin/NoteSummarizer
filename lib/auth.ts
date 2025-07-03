@@ -1,16 +1,11 @@
 import { NextAuthOptions } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { MongoDBAdapter } from '@auth/mongodb-adapter';
-import { MongoClient } from 'mongodb';
 import connectDB from './mongodb';
 import User from './models/User';
 
-const client = new MongoClient(process.env.MONGODB_URI!);
-const clientPromise = client.connect();
-
 export const authOptions: NextAuthOptions = {
-  adapter: MongoDBAdapter(clientPromise),
+  // Remove the MongoDB adapter completely - use your custom User model
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -79,15 +74,22 @@ export const authOptions: NextAuthOptions = {
           const existingUser = await User.findOne({ email: user.email });
 
           if (!existingUser) {
-            await User.create({
+            const newUser = await User.create({
               name: user.name,
               email: user.email,
               googleId: account.providerAccountId,
               emailVerified: new Date(),
             });
-          } else if (!existingUser.googleId) {
-            existingUser.googleId = account.providerAccountId;
-            await existingUser.save();
+            
+            user.id = newUser._id.toString();
+          } else {
+            if (!existingUser.googleId) {
+              existingUser.googleId = account.providerAccountId;
+              existingUser.emailVerified = new Date();
+              await existingUser.save();
+            }
+            
+            user.id = existingUser._id.toString();
           }
         } catch (error) {
           console.error('Sign in error:', error);
